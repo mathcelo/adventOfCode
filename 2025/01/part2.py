@@ -1,23 +1,4 @@
-from enum import Enum
-
-MODULUS = 100
-
-
-class Direction(Enum):
-    L = "L"
-    R = "R"
-
-
-class Instruction:
-    def __init__(self, direction: Direction, distance: int):
-        self.direction = direction
-        self.distance = distance
-
-
-def instruction_parse(instruction: str) -> Instruction:
-    direction = Direction(instruction[0])
-    distance = int(instruction[1:])
-    return Instruction(direction, distance)
+from common import MODULUS, Direction, Instruction, load_input
 
 
 def count_zero_hits(start: int, end: int) -> int:
@@ -53,9 +34,30 @@ def solve(instructions: list[Instruction]) -> int:
 
 
 def main():
-    instructions = [instruction_parse(line) for line in open("document.txt")]
+    from pathlib import Path
+    script_dir = Path(__file__).parent
+    instructions = load_input(str(script_dir / "input.txt"))
     print(solve(instructions))
 
 
+def test():
+    """Test with example input if test_input.txt exists."""
+    from pathlib import Path
+    script_dir = Path(__file__).parent
+    try:
+        instructions = load_input(str(script_dir / "test_input.txt"))
+        result = solve(instructions)
+        print(f"Test result: {result}")
+        return result
+    except FileNotFoundError:
+        print("test_input.txt not found, skipping test")
+        return None
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        test()
+    else:
+        main()

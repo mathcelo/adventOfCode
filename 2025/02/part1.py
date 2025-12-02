@@ -2,19 +2,16 @@ from common import Range, input_reader
 
 
 def is_number_invalid(number: int) -> bool:
-    """Check if a number is invalid (made of a repeating sequence)."""
+    """Check if a number is invalid (made of a sequence repeated twice)."""
     str_number = str(number)
     length = len(str_number)
-    for chunk_len in range(1, (length // 2) + 1):
-        if length % chunk_len != 0:
-            continue
-        chunk = str_number[:chunk_len]
-        if chunk.startswith("0"):
-            continue
-        repetitions = length // chunk_len
-        if repetitions >= 2 and chunk * repetitions == str_number:
-            return True
-    return False
+    if length % 2 != 0:
+        return False
+    half = length // 2
+    first, second = str_number[:half], str_number[half:]
+    if first.startswith("0"):
+        return False
+    return first == second
 
 
 def solve(ranges: list[Range], verbose: bool = False) -> int:
