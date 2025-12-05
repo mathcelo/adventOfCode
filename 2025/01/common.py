@@ -24,4 +24,3 @@ def load_input(file_path: str) -> list[Instruction]:
     """Load instructions from input file."""
     with open(file_path, "r") as f:
         return [instruction_parse(line.strip()) for line in f if line.strip()]
-
