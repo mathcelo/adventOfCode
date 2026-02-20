@@ -139,5 +139,9 @@ dmypy.json
 ehthumbs.db
 Thumbs.db
 
+# Solution explanations
+**/SOLUTION.md
+**/task.txt
+
 
 

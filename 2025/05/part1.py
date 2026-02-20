@@ -1,13 +1,14 @@
 from typing import List, Tuple
 
+
 def read_file(file: str) -> Tuple[List[List[int]], List[int]]:
     ranges: List[List[int]] = []
     ids: List[int] = []
-    
-    with open(file, 'r') as f:
+
+    with open(file, "r") as f:
         for line in f:
             line = line.strip()
-            
+
             if not line:
                 continue
             elif "-" in line:
@@ -15,8 +16,9 @@ def read_file(file: str) -> Tuple[List[List[int]], List[int]]:
                 ranges.append([int(lower), int(upper)])
             else:
                 ids.append(int(line))
-    
+
     return ranges, ids
+
 
 def solve(ranges: List[List[int]], ids: List[int]) -> int:
     count = 0
@@ -27,6 +29,7 @@ def solve(ranges: List[List[int]], ids: List[int]) -> int:
                 break
     return count
 
+
 ranges, ids = read_file("input.txt")
 # ranges, ids = read_file("test-input.txt")
 count = solve(ranges, ids)
@@ -36,10 +39,10 @@ print(count)
 def solve2(ranges: List[List[int]]) -> int:
     if not ranges:
         return 0
-    
+
     # Sort ranges by start position
     sorted_ranges = sorted(ranges, key=lambda x: x[0])
-    
+
     # Merge overlapping ranges
     merged = [sorted_ranges[0]]
     for current in sorted_ranges[1:]:
@@ -48,11 +51,11 @@ def solve2(ranges: List[List[int]]) -> int:
             merged[-1] = [last[0], max(last[1], current[1])]
         else:
             merged.append(current)
-    
+
     # Count total IDs covered by merged ranges
     total = sum(rng[1] - rng[0] + 1 for rng in merged)
     return total
 
+
 sum = solve2(ranges)
 print(sum)
-
